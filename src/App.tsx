@@ -5,7 +5,7 @@ import styles from "./App.module.scss";
 export const App: FunctionComponent = () => {
     return (
         <main className={styles.main}>
-            <Game/>
+            <Game />
         </main>
     );
 };
