@@ -7,12 +7,15 @@ interface ButtonProps {
     y: number;
     activeButtonId: number;
     setActiveButtonId: (id: number) => void; //this is a funtion that takes in number as a parameter but returns nothing
+    gameScore: number;
+    setGameScore: (newGameScore: number) => void;
 }
-
-export const Button: FunctionComponent<ButtonProps> = ({ id, x, y, activeButtonId, setActiveButtonId }) => {
-
+// Button component
+export const Button: FunctionComponent<ButtonProps> = ({ id, x, y, activeButtonId, setActiveButtonId, gameScore, setGameScore}) => {
+    // works out if button is already active
     const isActive = id === activeButtonId;
 
+    // function to change the class to active by changing button colour
     const getClassName = (): string => {
         if (isActive) {
             return `${styles.button} ${styles.active}`
@@ -20,15 +23,22 @@ export const Button: FunctionComponent<ButtonProps> = ({ id, x, y, activeButtonI
         return styles.button;
     }
 
-    const buttonClicked = (): void => {
+    // function to call setActiveButtonId 
+    const changeButton = (): void => {
         if(isActive) {
+            // selects random button id
             const randomButton = Math.floor(Math.random() * 8);
+
+            // makes another random button active
             setActiveButtonId(randomButton);
+
+            // whenever we render a button you need to give it gameScore and a setGameScore function that adds 1 to gameScore
+            setGameScore(gameScore + 1)
         } 
     }
 
     return (
-        <circle onClick={buttonClicked} className={getClassName()} cx={x} cy={y} r={100} />
+        <circle onClick={changeButton} className={getClassName()} cx={x} cy={y} r={100} />
     );
 };
 
